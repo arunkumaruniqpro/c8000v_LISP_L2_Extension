@@ -184,16 +184,16 @@ Download the scripts from : https://github.com/Arunkumarsubbiahunique/network-se
 1. On pc1
 ---------
 * Set up IP settings as follows:
-  * IP address: 11.11.11.11
-  * Subnet Mask: 255.255.255.0
-  * Gateway: 11.11.11.254
+   * IP address: 11.11.11.11
+   * Subnet Mask: 255.255.255.0
+   * Gateway: 11.11.11.254
 
 2. On pc2
 ---------
 * Set up IP settings as follows:
-  * IP address: 11.11.11.12
-  * Subnet Mask: 255.255.255.0
-  * Gateway: 11.11.11.253
+   * IP address: 11.11.11.12
+   * Subnet Mask: 255.255.255.0
+   * Gateway: 11.11.11.253
 
 3. On vEDG01 - Crypto Configuration and Verification
 -------------------------------------------------------
@@ -230,7 +230,7 @@ crypto ipsec profile p2p_pf1
 
 
 
-code ...
+
 
 
 verification
