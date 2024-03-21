@@ -132,3 +132,21 @@ LISP Map-Register Header Format
 .. image:: lisp_header.png
   :width: 600
   :alt: Alternative text
+
+
+Network Configuration
+=====================
+The network is configured as follows:
+
+* The PCs are configured with IP addresses in the 11.11.11.0/24 subnet.
+* The vEDGE01 router is configured with the following interfaces:
+   * GiagbitEthernet1(10.16.201.2/30): This interface connects to the vEDGE02 - GigabitEthernet1 - 10.16.201.1/30.
+   * GiagbitEthernet2(11.11.11.254/30) This interface connects to the PC1 - eth0 - 11.11.11.11/24.
+   * Loopback0(200.1.247.1/32): This interface is used to establish dynamic Routing and LISP.
+   * Tunnel2(1.1.247.1/32): This interface is used to establis IPSec tunnel using VTI.
+
+* The vEDGE02 router is configured with the following interfaces:
+   * GiagbitEthernet1(10.16.201.1/30): This interface connects to the vEDGE01 - GigabitEthernet1 - 10.16.201.2/30.
+   * GiagbitEthernet2(11.11.11.253/30) This interface connects to the PC1 - eth0 - 11.11.11.12/24.
+   * Loopback0(200.1.247.2/32): This interface is used to establish dynamic Routing and LISP.
+   * Tunnel2(1.1.247.2/32): This interface is used to establis IPSec tunnel using VTI.
