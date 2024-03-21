@@ -48,3 +48,13 @@ At the edge of the network, when this packet needs to be routed to the Internet,
  
 
 "LISP" refers to the protocol used for exchanging EID-to-RLOC mapping information, the overall architecture includes two additional components: a mapping database, which consists of devices and procedures for distributing mapping information, and additional devices for implementing interworking between LISP-capable and non-LISP-capable parts of the Internet.
+
+• Map-Request: This message is sent by an ITR to the mapping database  when it needs to send a packet to a destination EID for which is has no cached RLOC.
+
+ 
+
+• Map-Reply: This message is returned to an ITR by an ETR or map server  in response to a Map-Request message. A Map-Reply message contains the EID prefix that matches the requested destination EID along with a set of RLOCs that can be used as the destination IP addresses for encapsulating user data. Additional information regarding priority and traffic-distribution across multiple RLOCs is also returned.
+
+ 
+
+• Map-Register: This message is sent by an ETR to a map server to define an EID prefix that it owns as well as the RLOCs that should be used for exchanging Map-Request and Map-Reply messages. The registration request includes the EID prefix, prefix length, RLOCs associated with the prefix, and priorities and traffic-sharing weights of each RLOC. Map-Register messages are sent periodically to maintain the registration state between an ETR and its map servers.
