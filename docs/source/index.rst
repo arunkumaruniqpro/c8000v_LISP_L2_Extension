@@ -150,3 +150,603 @@ The network is configured as follows:
    * GiagbitEthernet2(11.11.11.253/30) This interface connects to the PC1 - eth0 - 11.11.11.12/24.
    * Loopback0(200.1.247.2/32): This interface is used to establish dynamic Routing and LISP.
    * Tunnel2(1.1.247.2/32): This interface is used to establis IPSec tunnel using VTI.
+
+
+Lab Documentation: Extending Layer2 across Datacenters using Locator Identity Separation Protocol (LISP)'s!
+===========================================================================================================
+This document describes a network lab setup with two PCs (PC1, and PC2), a vEDGE router cisco 8000v (IoS XE), IPSec Site 2 Site Tunnel using SVTI, LISP and OSPF 
+The lab demonstrates routing, connectivity, and L2 Extension across DC's using LISP and OSPF functionalities.
+
+Hardware and Software:
+
+* VMware Workstation
+* EVE-NG Community Edition
+* Host-only network adapters - with EVE-NG networking
+* NAT adpater - EVE-NG to be access through browser
+* cisco 8000v - IOS XE images
+* Linux Tiny core for PC's
+
+Lab Setup:
+
+1. Download the VMware workstation or fusion for flavour of the operating system
+
+2. Install the VMWare software in accordance to your operating system by following the installation guide
+  
+3. Download the IOS Xe image from the github repo 
+
+.. image:: images/alpine_image.png
+  :alt: Alpine Image
+
+4. Download the images and follow the instruction to setup the PC;s:
+  https://www.eve-ng.net/index.php/documentation/howtos/howto-create-own-linux-host-image/
+
+Download the scripts from : https://github.com/Arunkumarsubbiahunique/network-setup/tree/main
+
+1. On pc1
+---------
+Set up IP settings as follows:
+IP address: 11.11.11.11
+Subnet Mask: 255.255.255.0
+Gateway: 11.11.11.254
+
+2. On pc1
+---------
+Set up IP settings as follows:
+IP address: 11.11.11.12
+Subnet Mask: 255.255.255.0
+Gateway: 11.11.11.253
+
+3. On vEDG01 - Crypto Configuration and Verification
+-------------------------------------------------------
+.. code-block:: bash
+  :linenos:
+!
+crypto ikev2 proposal ikev2_proposal 
+ encryption aes-cbc-128
+ integrity sha1
+ group 14
+!
+crypto ikev2 policy ikev2_policy 
+ proposal ikev2_proposal
+!
+crypto ikev2 keyring ikev2_keyring
+ peer vEDGE01
+  address 10.16.201.1
+  pre-shared-key local cisco
+  pre-shared-key remote cisco
+ !
+!
+!
+crypto ikev2 profile ikve2_profile
+ match identity remote address 10.16.201.1 255.255.255.252 
+ identity local address 10.16.201.2
+ authentication remote pre-share
+ authentication local pre-share
+ keyring local ikev2_keyring
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+crypto ipsec transform-set ipsec_transform1 esp-aes 256 esp-sha512-hmac 
+ mode tunnel
+!
+!
+crypto ipsec profile p2p_pf1
+ set transform-set ipsec_transform1 
+ set ikev2-profile ikve2_profile
+!
+code ...
+verification
+------------
+.. code-block:: bash
+  :linenos:
+vEDGE01#sh crypto ikev2 proposal 
+ IKEv2 proposal: default 
+     Encryption : AES-CBC-256
+     Integrity  : SHA512 SHA384
+     PRF        : SHA512 SHA384
+     DH Group   : DH_GROUP_256_ECP/Group 19 DH_GROUP_2048_MODP/Group 14 DH_GROUP_521_ECP/Group 21 DH_GROUP_1536_MODP/Group 5
+ IKEv2 proposal: ikev2_proposal 
+     Encryption : AES-CBC-128
+     Integrity  : SHA96
+     PRF        : SHA1
+     DH Group   : DH_GROUP_2048_MODP/Group 14
+
+vEDGE01#sh crypto ikev2 policy 
+ IKEv2 policy : default
+      Match fvrf : any
+      Match address local : any 
+      Proposal    : default 
+ IKEv2 policy : ikev2_policy
+      Match fvrf  : global
+      Match address local : any 
+      Proposal    : ikev2_proposal 
+
+vEDGE01#sh crypto ikev2 profile 
+
+IKEv2 profile: ikev2_profile
+ Shutdown : No
+ Ref Count: 5
+ Match criteria: 
+  Fvrf: global
+  Local address/interface: none
+  Identities: 
+   address 10.16.201.1 255.255.255.252
+  Certificate maps: none
+ Local identity: address 10.16.201.2
+ Remote identity: none
+ Local authentication method: pre-share
+ Remote authentication method(s): pre-share
+ EAP options: none
+ Keyring: ikev2_keyring
+ Trustpoint(s): none
+ Lifetime: 86400 seconds
+ DPD: disabled
+ NAT-keepalive: disabled
+ Ivrf: none
+ Virtual-template: none
+ mode auto: none
+ AAA AnyConnect EAP authentication mlist: none
+ AAA EAP authentication mlist: none
+ AAA authentication mlist: none
+ AAA Accounting: none
+ AAA group authorization: none
+ AAA user authorization: none
+
+vEDGE01#sh crypto ipsec transform-set 
+Transform set default: { esp-aes esp-sha-hmac  } 
+   will negotiate = { Transport,  }, 
+   
+Transform set ipsec_transform1: { esp-256-aes esp-sha512-hmac  } 
+   will negotiate = { Tunnel,  }, 
+
+vEDGE01#sh crypto ipsec profile 
+IPSEC profile default
+Security association lifetime: 4608000 kilobytes/3600 seconds
+Dualstack (Y/N): N
+Responder-Only (Y/N): N
+PFS (Y/N): N
+Mixed-mode : Disabled
+Transform sets={ 
+default:  { esp-aes esp-sha-hmac  } , 
+}
+IPSEC profile p2p_pf1
+IKEv2 Profile: ikev2_profile
+Security association lifetime: 4608000 kilobytes/3600 seconds
+Dualstack (Y/N): N
+Responder-Only (Y/N): N
+PFS (Y/N): N
+Mixed-mode : Disabled
+Transform sets={ 
+ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
+}
+code ...
+
+4. On vEDG01 - Interface Configuration and Verification
+-------------------------------------------------------
+
+.. code-block:: bash
+  :linenos:
+!
+interface Loopback0
+ ip address 200.1.247.1 255.255.255.255
+!
+interface Tunnel2
+ ip address 1.1.247.1 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ tunnel source GigabitEthernet1
+ tunnel mode ipsec ipv4
+ tunnel destination 10.16.201.1
+ tunnel protection ipsec profile p2p_pf1
+!
+interface LISP0
+!
+interface GigabitEthernet1
+ ip address 10.16.201.2 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 11.11.11.254 255.255.255.0
+ negotiation auto
+ lisp mobility subnet1 nbr-proxy-reply requests 3
+ no mop enabled
+ no mop sysid
+!
+code ...
+
+verification
+------------
+.. code-block:: bash
+  :linenos:
+
+vEDGE01#sh ip int bri
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet1       10.16.201.2     YES NVRAM  up                    up      
+GigabitEthernet2       11.11.11.254    YES manual up                    up      
+GigabitEthernet3       unassigned      YES NVRAM  administratively down down    
+GigabitEthernet4       unassigned      YES NVRAM  administratively down down    
+LISP0                  200.1.247.1     YES unset  up                    up      
+Loopback0              200.1.247.1     YES manual up                    up      
+Tunnel2                1.1.247.1       YES manual up                    up  
+
+code ...
+
+5. On vEDG01 - LISP & OSPF Configuration and Verification
+---------------------------------------------------------
+.. code-block:: bash
+  :linenos:
+
+!
+router lisp
+ locator-set s2s
+  200.1.247.1 priority 1 weight 100
+  exit-locator-set
+ !
+ service ipv4
+  itr map-resolver 200.1.247.2
+  itr
+  etr map-server 200.1.247.2 key cisco
+  etr
+  use-petr 200.1.247.2
+  exit-service-ipv4
+ !
+ instance-id 0
+  dynamic-eid subnet1
+   database-mapping 11.11.11.0/24 locator-set s2s
+   map-notify-group 239.0.0.1
+   exit-dynamic-eid
+  !
+  service ipv4
+   eid-table default
+   exit-service-ipv4
+  !
+  exit-instance-id
+ !
+ exit-router-lisp
+!
+router ospf 11
+ network 1.1.247.1 0.0.0.0 area 11
+ network 200.1.247.1 0.0.0.0 area 11
+!
+
+code ...
+
+verification
+------------
+.. code-block:: bash
+  :linenos:
+
+vEDGE01#sh ip lisp map-cache
+-----------------------------------------------
+ <show ip/ipv6 lisp (instance-id <0-16777200>)
+ map-cache command is depreciated.
+ Please use <show lisp instance-id <0-16777200>
+ ipv4/ipv6 map-cacheto get desired information.
+------------------------------------------------
+LISP IPv4 Mapping Cache for LISP 0 EID-table default (IID 0), 3 entries
+11.11.11.0/24, uptime: 03:49:07, expires: never, via dynamic-EID, send-map-request
+  Negative cache entry, action: send-map-request
+11.11.11.11/32, uptime: 02:56:07, expires: 21:03:52, via map-reply, complete
+  Locator      Uptime    State  Pri/Wgt     Encap-IID
+  200.1.247.1  02:56:07  up       1/100       -
+11.11.11.128/25, uptime: 02:58:00, expires: 00:00:17, via map-reply, forward-native
+  Negative cache entry, action: forward-native
+
+vEDGE01#sh ip lisp database 
+-------------------------------------------------------
+
+ <show ip/ipv6 lisp (instance-id <0-16777200>) database
+ (EID-Prefix list)> commands are depreciated.
+
+ Please use <show lisp instance-id <0-16777200>
+ ipv4/ipv6 database (EID-Prefix list)> to get desired
+ information.
+--------------------------------------------------------
+LISP ETR IPv4 Mapping Database for LISP 0 EID-table default (IID 0), LSBs: 0x1
+Entries total 1, no-route 0, inactive 0, do-not-register 0
+11.11.11.12/32, dynamic-eid subnet1, inherited from default locator-set dmz
+  Uptime: 02:58:11, Last-change: 02:58:11
+  Domain-ID: local
+  Service-Insertion: N/A
+  Locator      Pri/Wgt  Source     State
+  200.1.247.2    1/100  cfg-addr   site-self, reachable
+
+vEDGE01# sh ip ospf nei
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+200.1.247.1       0   FULL/  -        00:00:37    1.1.247.1       Tunnel2
+
+code ...
+
+6. On vEDG02 - Crypto Configuration and Verification
+-------------------------------------------------------
+.. code-block:: bash
+  :linenos:
+!
+crypto ikev2 proposal ikev2_proposal 
+ encryption aes-cbc-128
+ integrity sha1
+ group 14
+!
+crypto ikev2 policy ikev2_policy 
+ proposal ikev2_proposal
+!
+crypto ikev2 keyring ikev2_keyring
+ peer vEDGE01
+  address 10.16.201.2
+  pre-shared-key local cisco
+  pre-shared-key remote cisco
+ !
+!
+!
+crypto ikev2 profile ikve2_profile
+ match identity remote address 10.16.201.2 255.255.255.252 
+ identity local address 10.16.201.1
+ authentication remote pre-share
+ authentication local pre-share
+ keyring local ikev2_keyring
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+crypto ipsec transform-set ipsec_transform1 esp-aes 256 esp-sha512-hmac 
+ mode tunnel
+!
+!
+crypto ipsec profile p2p_pf1
+ set transform-set ipsec_transform1 
+ set ikev2-profile ikve2_profile
+!
+code ...
+verification
+------------
+.. code-block:: bash
+  :linenos:
+vEDGE02#sh crypto ikev2 proposal 
+ IKEv2 proposal: default 
+     Encryption : AES-CBC-256
+     Integrity  : SHA512 SHA384
+     PRF        : SHA512 SHA384
+     DH Group   : DH_GROUP_256_ECP/Group 19 DH_GROUP_2048_MODP/Group 14 DH_GROUP_521_ECP/Group 21 DH_GROUP_1536_MODP/Group 5
+ IKEv2 proposal: ikev2_proposal 
+     Encryption : AES-CBC-128
+     Integrity  : SHA96
+     PRF        : SHA1
+     DH Group   : DH_GROUP_2048_MODP/Group 14
+
+vEDGE02#sh crypto ikev2 policy 
+ IKEv2 policy : default
+      Match fvrf : any
+      Match address local : any 
+      Proposal    : default 
+ IKEv2 policy : ikev2_policy
+      Match fvrf  : global
+      Match address local : any 
+      Proposal    : ikev2_proposal 
+
+vEDGE02#sh crypto ikev2 profile 
+IKEv2 profile: ikev2_profile
+ Shutdown : No
+ Ref Count: 5
+ Match criteria: 
+  Fvrf: global
+  Local address/interface: none
+  Identities: 
+   address 10.16.201.2 255.255.255.252
+  Certificate maps: none
+ Local identity: address 10.16.201.1
+ Remote identity: none
+ Local authentication method: pre-share
+ Remote authentication method(s): pre-share
+ EAP options: none
+ Keyring: ikev2_keyring
+ Trustpoint(s): none
+ Lifetime: 86400 seconds
+ DPD: disabled
+ NAT-keepalive: disabled
+ Ivrf: none
+ Virtual-template: none
+ mode auto: none
+ AAA AnyConnect EAP authentication mlist: none
+ AAA EAP authentication mlist: none
+ AAA authentication mlist: none
+ AAA Accounting: none
+ AAA group authorization: none
+ AAA user authorization: none
+
+vEDGE01#sh crypto ipsec transform-set 
+Transform set default: { esp-aes esp-sha-hmac  } 
+   will negotiate = { Transport,  }, 
+   
+Transform set ipsec_transform1: { esp-256-aes esp-sha512-hmac  } 
+   will negotiate = { Tunnel,  }, 
+
+vEDGE01#sh crypto ipsec profile 
+IPSEC profile default
+Security association lifetime: 4608000 kilobytes/3600 seconds
+Dualstack (Y/N): N
+Responder-Only (Y/N): N
+PFS (Y/N): N
+Mixed-mode : Disabled
+Transform sets={ 
+default:  { esp-aes esp-sha-hmac  } , 
+}
+IPSEC profile p2p_pf1
+IKEv2 Profile: ikev2_profile
+Security association lifetime: 4608000 kilobytes/3600 seconds
+Dualstack (Y/N): N
+Responder-Only (Y/N): N
+PFS (Y/N): N
+Mixed-mode : Disabled
+Transform sets={ 
+ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
+}
+code ...
+
+4. On vEDG02 - Interface Configuration and Verification
+-------------------------------------------------------
+
+.. code-block:: bash
+  :linenos:
+!
+interface Loopback0
+ ip address 200.1.247.2 255.255.255.255
+!
+interface Tunnel2
+ ip address 1.1.247.2 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ tunnel source GigabitEthernet1
+ tunnel mode ipsec ipv4
+ tunnel destination 10.16.201.1
+ tunnel protection ipsec profile p2p_pf1
+!
+interface LISP0
+!
+interface GigabitEthernet1
+ ip address 10.16.201.1 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 11.11.11.253 255.255.255.0
+ negotiation auto
+ lisp mobility subnet1 nbr-proxy-reply requests 3
+ no mop enabled
+ no mop sysid
+!
+code ...
+
+verification
+------------
+.. code-block:: bash
+  :linenos:
+
+vEDGE01#sh ip int bri
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet1       10.16.201.1     YES NVRAM  up                    up      
+GigabitEthernet2       11.11.11.253    YES manual up                    up      
+GigabitEthernet3       unassigned      YES NVRAM  administratively down down    
+GigabitEthernet4       unassigned      YES NVRAM  administratively down down    
+LISP0                  200.1.247.2     YES unset  up                    up      
+Loopback0              200.1.247.2     YES manual up                    up      
+Tunnel2                1.1.247.2       YES manual up                    up  
+
+code ...
+
+5. On vEDG02 - LISP & OSPF Configuration and Verification
+---------------------------------------------------------
+.. code-block:: bash
+  :linenos:
+
+!
+router lisp
+ locator-set dmz
+  200.1.247.2 priority 1 weight 100
+  exit-locator-set
+ !
+ service ipv4
+  itr map-resolver 200.1.247.2
+  etr map-server 200.1.247.2 key cisco
+  etr
+  proxy-etr
+  proxy-itr 200.1.247.2
+  map-server
+  map-resolver
+  exit-service-ipv4
+ !
+ instance-id 0
+  dynamic-eid subnet1
+   database-mapping 11.11.11.0/24 locator-set dmz
+   map-notify-group 239.0.0.1
+   exit-dynamic-eid
+  !
+  service ipv4
+   eid-table default
+   exit-service-ipv4
+  !
+  exit-instance-id
+ !
+ site DATA_CENTER
+  authentication-key cisco
+  eid-record 11.11.11.0/24 accept-more-specifics
+  exit-site
+ !
+ exit-router-lisp
+!
+router ospf 11
+ network 1.1.247.2 0.0.0.0 area 11
+ network 200.1.247.2 0.0.0.0 area 11
+!
+
+
+code ...
+
+verification
+------------
+.. code-block:: bash
+  :linenos:
+
+vEDGE02#sh ip lisp map-cache 
+-----------------------------------------------------------
+ <show ip/ipv6 lisp (instance-id <0-16777200>)
+ map-cache command is depreciated.
+
+ Please use <show lisp instance-id <0-16777200>
+ ipv4/ipv6 map-cacheto get desired information.
+------------------------------------------------------------
+LISP IPv4 Mapping Cache for LISP 0 EID-table default (IID 0), 3 entries
+0.0.0.0/0, uptime: 03:11:05, expires: never, via static-send-map-request
+  Negative cache entry, action: send-map-request
+11.11.11.0/24, uptime: 03:44:18, expires: never, via dynamic-EID, send-map-request
+  Negative cache entry, action: send-map-request
+11.11.11.12/32, uptime: 03:11:00, expires: 20:48:59, via map-reply, complete
+  Locator      Uptime    State  Pri/Wgt     Encap-IID
+  200.1.247.2  03:11:00  up       1/100 
+
+vEDGE02#sh ip lisp database  
+-----------------------------------------------------------
+ <show ip/ipv6 lisp (instance-id <0-16777200>) database
+ (EID-Prefix list)> commands are depreciated.
+
+ Please use <show lisp instance-id <0-16777200>
+ ipv4/ipv6 database (EID-Prefix list)> to get desired
+ information.
+------------------------------------------------------------
+LISP ETR IPv4 Mapping Database for LISP 0 EID-table default (IID 0), LSBs: 0x1
+Entries total 1, no-route 0, inactive 0, do-not-register 0
+
+11.11.11.11/32, dynamic-eid subnet1, inherited from default locator-set s2s
+  Uptime: 03:11:55, Last-change: 03:11:55
+  Domain-ID: local
+  Service-Insertion: N/A
+  Locator      Pri/Wgt  Source     State
+  200.1.247.1    1/100  cfg-addr   site-self, reachable
+
+vEDGE02#sh ip ospf nei
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+200.1.247.2       0   FULL/  -        00:00:30    1.1.247.2       Tunnel2
+
+code ...
+
