@@ -117,14 +117,18 @@ a route with a Null0 next-hop
 
 4)If the action is to forward, then the packet is encapsulated and a destination address lookup is performed on the destination/remoteRLOC, and once the output interface is known, the source RLOC is filled in.
 
- 
-
- 
-
 LISP Data Packet Header Format
+==============================
 
-.. image:: EID_to_RLOC_Mapping.png
+.. image:: lisp_header.png
   :width: 600
   :alt: Alternative text
 
 Encapsulated user data packets are transported using UDP port 4341, and LISP control packets are transported using UDP port 4342.
+
+
+LISP Map-Register Header Format
+===============================
+.. image:: lisp_header.png
+  :width: 600
+  :alt: Alternative text
