@@ -197,7 +197,7 @@ Download the scripts from : https://github.com/Arunkumarsubbiahunique/network-se
 
 3. On vEDG01 - Crypto Configuration and Verification
 -------------------------------------------------------
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 crypto ikev2 proposal ikev2_proposal 
@@ -235,7 +235,7 @@ crypto ipsec profile p2p_pf1
 
 verification
 ------------
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -321,12 +321,10 @@ ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } ,
 
 
 
-code ...
-
 4. On vEDG01 - Interface Configuration and Verification
 -------------------------------------------------------
 
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -359,12 +357,9 @@ interface GigabitEthernet2
  no mop sysid
 
 
-
-code ...
-
 verification
 ------------
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -379,11 +374,9 @@ Loopback0              200.1.247.1     YES manual up                    up
 Tunnel2                1.1.247.1       YES manual up                    up  
 
 
-code ...
-
 5. On vEDG01 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -421,12 +414,9 @@ router ospf 11
 
 
 
-
-code ...
-
 verification
 ------------
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -471,13 +461,11 @@ Neighbor ID     Pri   State           Dead Time   Address         Interface
 
 
 
-code ...
-
 6. On vEDG02 - Crypto Configuration and Verification
 -------------------------------------------------------
 
 
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -526,18 +514,10 @@ crypto ipsec profile p2p_pf1
  set ikev2-profile ikve2_profile
 !
 
-
-
-code ...
-
-
-
-
 verification
 ------------
 
-
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -623,12 +603,10 @@ ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } ,
 
 
 
-code ...
-
 4. On vEDG02 - Interface Configuration and Verification
 -------------------------------------------------------
 
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -662,13 +640,10 @@ interface GigabitEthernet2
 !
 
 
-code ...
 
 verification
 ------------
-
-
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -685,13 +660,10 @@ Tunnel2                1.1.247.2       YES manual up                    up
 
 
 
-code ...
 
 5. On vEDG02 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
-
-
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -738,13 +710,10 @@ router ospf 11
 
 
 
-code ...
 
 verification
 ------------
-
-
-.. code-block:: bash
+.. code-block:: cisco
   :linenos:
 
 
@@ -789,7 +758,4 @@ vEDGE02#sh ip ospf nei
 Neighbor ID     Pri   State           Dead Time   Address         Interface
 200.1.247.2       0   FULL/  -        00:00:30    1.1.247.2       Tunnel2
 
-
-
-code ...
 
