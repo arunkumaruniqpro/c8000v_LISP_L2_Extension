@@ -184,67 +184,50 @@ Download the scripts from : https://github.com/Arunkumarsubbiahunique/network-se
 1. On pc1
 ---------
 * Set up IP settings as follows:
-  *** IP address: 11.11.11.11
-  *** Subnet Mask: 255.255.255.0
-  *** Gateway: 11.11.11.254
+  * IP address: 11.11.11.11
+  * Subnet Mask: 255.255.255.0
+  * Gateway: 11.11.11.254
 
-2. On pc1
+2. On pc2
 ---------
 * Set up IP settings as follows:
-  *** IP address: 11.11.11.12
-  *** Subnet Mask: 255.255.255.0
-  *** Gateway: 11.11.11.253
+  * IP address: 11.11.11.12
+  * Subnet Mask: 255.255.255.0
+  * Gateway: 11.11.11.253
 
 3. On vEDG01 - Crypto Configuration and Verification
 -------------------------------------------------------
 .. code-block:: bash
   :linenos:
 
-
-!
 crypto ikev2 proposal ikev2_proposal 
  encryption aes-cbc-128
  integrity sha1
  group 14
-!
+
 crypto ikev2 policy ikev2_policy 
  proposal ikev2_proposal
-!
+
 crypto ikev2 keyring ikev2_keyring
  peer vEDGE01
   address 10.16.201.1
   pre-shared-key local cisco
   pre-shared-key remote cisco
- !
-!
-!
+
 crypto ikev2 profile ikve2_profile
  match identity remote address 10.16.201.1 255.255.255.252 
  identity local address 10.16.201.2
  authentication remote pre-share
  authentication local pre-share
  keyring local ikev2_keyring
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
+
 crypto ipsec transform-set ipsec_transform1 esp-aes 256 esp-sha512-hmac 
  mode tunnel
-!
-!
+
 crypto ipsec profile p2p_pf1
  set transform-set ipsec_transform1 
  set ikev2-profile ikve2_profile
-!
+
 
 
 code ...
@@ -347,10 +330,10 @@ code ...
   :linenos:
 
 
-!
+
 interface Loopback0
  ip address 200.1.247.1 255.255.255.255
-!
+
 interface Tunnel2
  ip address 1.1.247.1 255.255.255.252
  ip mtu 1400
@@ -359,22 +342,22 @@ interface Tunnel2
  tunnel mode ipsec ipv4
  tunnel destination 10.16.201.1
  tunnel protection ipsec profile p2p_pf1
-!
+
 interface LISP0
-!
+
 interface GigabitEthernet1
  ip address 10.16.201.2 255.255.255.252
  negotiation auto
  no mop enabled
  no mop sysid
-!
+
 interface GigabitEthernet2
  ip address 11.11.11.254 255.255.255.0
  negotiation auto
  lisp mobility subnet1 nbr-proxy-reply requests 3
  no mop enabled
  no mop sysid
-!
+
 
 
 code ...
@@ -404,12 +387,12 @@ code ...
   :linenos:
 
 
-!
+
 router lisp
  locator-set s2s
   200.1.247.1 priority 1 weight 100
   exit-locator-set
- !
+ 
  service ipv4
   itr map-resolver 200.1.247.2
   itr
@@ -417,25 +400,25 @@ router lisp
   etr
   use-petr 200.1.247.2
   exit-service-ipv4
- !
+ 
  instance-id 0
   dynamic-eid subnet1
    database-mapping 11.11.11.0/24 locator-set s2s
    map-notify-group 239.0.0.1
    exit-dynamic-eid
-  !
+  
   service ipv4
    eid-table default
    exit-service-ipv4
-  !
+  
   exit-instance-id
- !
+ 
  exit-router-lisp
-!
+
 router ospf 11
  network 1.1.247.1 0.0.0.0 area 11
  network 200.1.247.1 0.0.0.0 area 11
-!
+
 
 
 
