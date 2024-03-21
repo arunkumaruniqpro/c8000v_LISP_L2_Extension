@@ -39,7 +39,9 @@ EID-to-RLOC Mapping
 ===================
 The key to using these RLOCs and EIDs is the mapping between them. A device (S1) communicating with another device (D1) will create a packet with the EID of S1 as the source IP address and the EID of D1 as the destination IP address.
 
- 
+.. image:: EID_to_RLOC_Mapping.png
+  :width: 600
+  :alt: Alternative text
 
 At the edge of the network, when this packet needs to be routed to the Internet, an ingress tunnel router maps the destination EID to a destination RLOC and then encapsulates the original packet with an additional header that has the source IP address of the ITR RLOC and the destination IP address of the RLOC of an egress tunnel router that connects to D1. LISP specifies the way that the mappings between EIDs and RLOCs are defined, exchanged, and used.
 
