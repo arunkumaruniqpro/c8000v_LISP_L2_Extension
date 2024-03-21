@@ -15,14 +15,4 @@ High-scale Virtualization/Multi-tenancy support
 Data Center/Cloud Mobility support, including session persistence across mobility events
 and seamless mobile node support.
 
-.. note::
 
-   This project is under active development.
-
-Contents
---------
-
-.. toctree::
-
-   usage
-   api
