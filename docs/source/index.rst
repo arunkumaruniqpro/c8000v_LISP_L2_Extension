@@ -129,7 +129,7 @@ Encapsulated user data packets are transported using UDP port 4341, and LISP con
 
 LISP Map-Register Header Format
 ===============================
-.. image:: lisp_header.png
+.. image:: lisp_map_register_header.png
   :width: 600
   :alt: Alternative text
 
@@ -174,8 +174,7 @@ Lab Setup:
   
 3. Download the IOS Xe image from the github repo 
 
-.. image:: images/alpine_image.png
-  :alt: Alpine Image
+
 
 4. Download the images and follow the instruction to setup the PC;s:
   https://www.eve-ng.net/index.php/documentation/howtos/howto-create-own-linux-host-image/
@@ -184,22 +183,24 @@ Download the scripts from : https://github.com/Arunkumarsubbiahunique/network-se
 
 1. On pc1
 ---------
-Set up IP settings as follows:
-IP address: 11.11.11.11
-Subnet Mask: 255.255.255.0
-Gateway: 11.11.11.254
+* Set up IP settings as follows:
+  *** IP address: 11.11.11.11
+  *** Subnet Mask: 255.255.255.0
+  *** Gateway: 11.11.11.254
 
 2. On pc1
 ---------
-Set up IP settings as follows:
-IP address: 11.11.11.12
-Subnet Mask: 255.255.255.0
-Gateway: 11.11.11.253
+* Set up IP settings as follows:
+  *** IP address: 11.11.11.12
+  *** Subnet Mask: 255.255.255.0
+  *** Gateway: 11.11.11.253
 
 3. On vEDG01 - Crypto Configuration and Verification
 -------------------------------------------------------
 .. code-block:: bash
   :linenos:
+
+
 !
 crypto ikev2 proposal ikev2_proposal 
  encryption aes-cbc-128
@@ -244,11 +245,17 @@ crypto ipsec profile p2p_pf1
  set transform-set ipsec_transform1 
  set ikev2-profile ikve2_profile
 !
+
+
 code ...
+
+
 verification
 ------------
 .. code-block:: bash
   :linenos:
+
+
 vEDGE01#sh crypto ikev2 proposal 
  IKEv2 proposal: default 
      Encryption : AES-CBC-256
@@ -272,7 +279,6 @@ vEDGE01#sh crypto ikev2 policy
       Proposal    : ikev2_proposal 
 
 vEDGE01#sh crypto ikev2 profile 
-
 IKEv2 profile: ikev2_profile
  Shutdown : No
  Ref Count: 5
@@ -329,6 +335,9 @@ Mixed-mode : Disabled
 Transform sets={ 
 ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
 }
+
+
+
 code ...
 
 4. On vEDG01 - Interface Configuration and Verification
@@ -336,6 +345,8 @@ code ...
 
 .. code-block:: bash
   :linenos:
+
+
 !
 interface Loopback0
  ip address 200.1.247.1 255.255.255.255
@@ -364,12 +375,15 @@ interface GigabitEthernet2
  no mop enabled
  no mop sysid
 !
+
+
 code ...
 
 verification
 ------------
 .. code-block:: bash
   :linenos:
+
 
 vEDGE01#sh ip int bri
 Interface              IP-Address      OK? Method Status                Protocol
@@ -381,12 +395,14 @@ LISP0                  200.1.247.1     YES unset  up                    up
 Loopback0              200.1.247.1     YES manual up                    up      
 Tunnel2                1.1.247.1       YES manual up                    up  
 
+
 code ...
 
 5. On vEDG01 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
 .. code-block:: bash
   :linenos:
+
 
 !
 router lisp
@@ -421,12 +437,15 @@ router ospf 11
  network 200.1.247.1 0.0.0.0 area 11
 !
 
+
+
 code ...
 
 verification
 ------------
 .. code-block:: bash
   :linenos:
+
 
 vEDGE01#sh ip lisp map-cache
 -----------------------------------------------
@@ -467,12 +486,18 @@ vEDGE01# sh ip ospf nei
 Neighbor ID     Pri   State           Dead Time   Address         Interface
 200.1.247.1       0   FULL/  -        00:00:37    1.1.247.1       Tunnel2
 
+
+
 code ...
 
 6. On vEDG02 - Crypto Configuration and Verification
 -------------------------------------------------------
+
+
 .. code-block:: bash
   :linenos:
+
+
 !
 crypto ikev2 proposal ikev2_proposal 
  encryption aes-cbc-128
@@ -517,11 +542,22 @@ crypto ipsec profile p2p_pf1
  set transform-set ipsec_transform1 
  set ikev2-profile ikve2_profile
 !
+
+
+
 code ...
+
+
+
+
 verification
 ------------
+
+
 .. code-block:: bash
   :linenos:
+
+
 vEDGE02#sh crypto ikev2 proposal 
  IKEv2 proposal: default 
      Encryption : AES-CBC-256
@@ -601,6 +637,9 @@ Mixed-mode : Disabled
 Transform sets={ 
 ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
 }
+
+
+
 code ...
 
 4. On vEDG02 - Interface Configuration and Verification
@@ -608,6 +647,8 @@ code ...
 
 .. code-block:: bash
   :linenos:
+
+
 !
 interface Loopback0
  ip address 200.1.247.2 255.255.255.255
@@ -636,12 +677,18 @@ interface GigabitEthernet2
  no mop enabled
  no mop sysid
 !
+
+
 code ...
 
 verification
 ------------
+
+
 .. code-block:: bash
   :linenos:
+
+
 
 vEDGE01#sh ip int bri
 Interface              IP-Address      OK? Method Status                Protocol
@@ -653,12 +700,18 @@ LISP0                  200.1.247.2     YES unset  up                    up
 Loopback0              200.1.247.2     YES manual up                    up      
 Tunnel2                1.1.247.2       YES manual up                    up  
 
+
+
 code ...
 
 5. On vEDG02 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
+
+
 .. code-block:: bash
   :linenos:
+
+
 
 !
 router lisp
@@ -701,12 +754,17 @@ router ospf 11
 !
 
 
+
 code ...
 
 verification
 ------------
+
+
 .. code-block:: bash
   :linenos:
+
+
 
 vEDGE02#sh ip lisp map-cache 
 -----------------------------------------------------------
@@ -747,6 +805,8 @@ Entries total 1, no-route 0, inactive 0, do-not-register 0
 vEDGE02#sh ip ospf nei
 Neighbor ID     Pri   State           Dead Time   Address         Interface
 200.1.247.2       0   FULL/  -        00:00:30    1.1.247.2       Tunnel2
+
+
 
 code ...
 
