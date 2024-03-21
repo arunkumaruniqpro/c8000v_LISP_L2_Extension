@@ -83,10 +83,48 @@ a route with a Null0 next-hop
  
 
 LISP Data Packet Header Format
-
+==============================
  
 
 Encapsulated user data packets are transported using UDP port 4341, and LISP control packets are transported using UDP port 4342.
  
 
 • Map-Register: This message is sent by an ETR to a map server to define an EID prefix that it owns as well as the RLOCs that should be used for exchanging Map-Request and Map-Reply messages. The registration request includes the EID prefix, prefix length, RLOCs associated with the prefix, and priorities and traffic-sharing weights of each RLOC. Map-Register messages are sent periodically to maintain the registration state between an ETR and its map servers.
+
+LISP xTR Encap Rules:
+
+.. image:: EID_to_RLOC_Mapping.png
+  :width: 600
+  :alt: Alternative text
+ 
+
+1) Perform destination address lookup in the normal routing table, if the route matched is one of the following proceed with LISP encap process, otherwise forward natively:
+
+default route (0.0.0.0/0 or ::/0)
+no route
+a route with a Null0 next-hop
+ 
+
+2) Check if the source address of the packet is within a local EID prefix.
+
+- If yes, the packet is eligible for LISP encapsulation.
+- If no, the packet is not eligible for LISP encapsulation, and will get forwarded natively.
+ 
+
+3) Perform lookup in map-cache, if entry found perform forwarding action (encap, drop, send-map-request or fwd-native), if no entry found forward natively. (As LISP control component installs default map-cache entry with action send-map-request, we will never get a miss).
+
+ 
+
+4)If the action is to forward, then the packet is encapsulated and a destination address lookup is performed on the destination/remoteRLOC, and once the output interface is known, the source RLOC is filled in.
+
+ 
+
+ 
+
+LISP Data Packet Header Format
+
+.. image:: EID_to_RLOC_Mapping.png
+  :width: 600
+  :alt: Alternative text
+
+Encapsulated user data packets are transported using UDP port 4341, and LISP control packets are transported using UDP port 4342.
