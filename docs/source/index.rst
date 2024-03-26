@@ -169,32 +169,46 @@ Hardware and Software:
 Lab Setup:
 
 1. Download the VMware workstation or fusion for flavour of the operating system or if you have VMWare ESXi server then follow the below steps to provision the VM.
-    System Requirement
-    Minimum RAM: 12G
-    Processor: 2
-    HDD: 30G
-2. Install the VMWare software in accordance to your operating system by following the installation guide
-https://docs.vmware.com/en/VMware-Workstation-Pro/17/com.vmware.ws.using.doc/GUID-7179281C-903A-46A9-89EE-C10B126D4960.html
-OR
-https://www.vmware.com/pdf/desktop/fusion-getting-started-50.pdf
-3. Download the prebuild EVE-NG lab OVF file from the Google Drive
-https://drive.google.com/file/d/1CqPXxXEIfGA8OGvMnv51i5xOQtZW5D7w/view?usp=drive_link
+   * System Requirement
+   * Minimum RAM: 12G
+   * Processor: 2
+   * HDD: 30G
+
+
+2. Install the VMWare software in accordance to your operating system by following the installation guide.
+
+   * https://docs.vmware.com/en/VMware-Workstation-Pro/17/com.vmware.ws.using.doc/GUID-7179281C-903A-46A9-89EE-C10B126D4960.html
+
+                                        OR
+
+   * https://www.vmware.com/pdf/desktop/fusion-getting-started-50.pdf
+
+3. Download the prebuild EVE-NG lab OVF file from the Google Drive.
+
+   * https://drive.google.com/file/d/1CqPXxXEIfGA8OGvMnv51i5xOQtZW5D7w/view?usp=drive_link
+
 4. Extract or unzip the file using zip extractor or windows default zip
-5. Import the OVF as below 
+
+5. Import the OVF as below
+
 .. image:: screen1.png
   :width: 600
   :alt: Alternative text
+
+
 .. image:: screen2.png
   :width: 600
   :alt: Alternative text
+
+
 .. image:: screen3.png
   :width: 600
   :alt: Alternative text
 
-4. Download the images and follow the instruction to setup the PC;s:
-  https://www.eve-ng.net/index.php/documentation/howtos/howto-create-own-linux-host-image/
 
-Download the scripts from : https://github.com/Arunkumarsubbiahunique/network-setup/tree/main
+6. The configuration file for vEDGE01 and vEDGE02 are as below
+
+   * Download the scripts from : https://github.com/arunkumaruniqpro/LISP
 
 1. On pc1
 ---------
@@ -212,7 +226,7 @@ Download the scripts from : https://github.com/Arunkumarsubbiahunique/network-se
 
 3. On vEDG01 - Crypto Configuration and Verification
 -------------------------------------------------------
-https://github.com/arunkumaruniqpro/LISP.git
+
 
 .. code-block:: cisco
   :linenos:
