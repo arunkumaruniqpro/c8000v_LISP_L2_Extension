@@ -1,0 +1,20 @@
+!
+crypto ikev2 proposal ikev2_proposal
+encryption aes-cbc-128 integrity sha1 group 14
+!
+crypto ikev2 policy ikev2_policy
+proposal ikev2_proposal
+!
+crypto ikev2 keyring ikev2_keyring
+peer vEDGE01
+address 10.16.201.1 pre-shared-key local cisco pre-shared-key remote cisco
+!
+crypto ikev2 profile ikve2_profile
+match identity remote address 10.16.201.1 255.255.255.252 identity local address 10.16.201.2 authentication remote pre-share authentication local pre-share keyring local ikev2_keyring
+!
+crypto ipsec transform-set ipsec_transform1 esp-aes 256 esp-sha512-hmac
+mode tunnel
+!
+crypto ipsec profile p2p_pf1
+set transform-set ipsec_transform1 set ikev2-profile ikve2_profile
+!
