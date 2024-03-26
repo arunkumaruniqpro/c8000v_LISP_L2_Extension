@@ -208,7 +208,7 @@ Lab Setup:
 
 6. Start the Virtual Machine by click on the start button, upon successful boot the below window appears with an ip address.
 
-.. image:: screen3.png
+.. image:: Login.jpg
   :width: 600
   :alt: Alternative text
 
