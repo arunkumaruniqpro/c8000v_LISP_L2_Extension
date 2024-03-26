@@ -240,7 +240,7 @@ Lab Setup:
 -------------------------------------------------------
 
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 #
@@ -265,11 +265,11 @@ set transform-set ipsec_transform1 set ikev2-profile ikve2_profile
 #
 
 
-
+  code . . .
 
 verification
 ------------
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 
@@ -353,12 +353,12 @@ Transform sets={
 ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
 }
 
-
+  code . . .
 
 4. On vEDG01 - Interface Configuration and Verification
 -------------------------------------------------------
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 
@@ -390,10 +390,11 @@ interface GigabitEthernet2
  no mop enabled
  no mop sysid
 
+  code . . .
 
 verification
 ------------
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 
@@ -407,10 +408,11 @@ LISP0                  200.1.247.1     YES unset  up                    up
 Loopback0              200.1.247.1     YES manual up                    up      
 Tunnel2                1.1.247.1       YES manual up                    up  
 
+  code . . .
 
 5. On vEDG01 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 
@@ -447,11 +449,12 @@ router ospf 11
  network 200.1.247.1 0.0.0.0 area 11
 
 
+  code . . .
 
 verification
 ------------
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 
@@ -471,8 +474,9 @@ LISP IPv4 Mapping Cache for LISP 0 EID-table default (IID 0), 3 entries
 11.11.11.128/25, uptime: 02:58:00, expires: 00:00:17, via map-reply, forward-native
   Negative cache entry, action: forward-native
 
+  code . . .
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 
@@ -498,13 +502,13 @@ vEDGE01# sh ip ospf nei
 Neighbor ID     Pri   State           Dead Time   Address         Interface
 200.1.247.1       0   FULL/  -        00:00:37    1.1.247.1       Tunnel2
 
-
+  code . . .
 
 6. On vEDG02 - Crypto Configuration and Verification
 -------------------------------------------------------
 
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 !
@@ -552,10 +556,12 @@ crypto ipsec profile p2p_pf1
  set ikev2-profile ikve2_profile
 !
 
+  code . . .
+
 verification
 ------------
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 vEDGE02#sh crypto ikev2 proposal 
@@ -571,7 +577,9 @@ vEDGE02#sh crypto ikev2 proposal
      DH Group   : DH_GROUP_2048_MODP/Group 14
 
 
-.. code-block:: html
+  code . . .
+
+.. code-block:: bash
   :linenos:
 
 vEDGE02#sh crypto ikev2 policy 
@@ -584,7 +592,9 @@ vEDGE02#sh crypto ikev2 policy
       Match address local : any 
       Proposal    : ikev2_proposal 
 
-.. code-block:: html
+  code . . .
+
+.. code-block:: bash
   :linenos:
 
 vEDGE02#sh crypto ikev2 profile 
@@ -617,7 +627,9 @@ IKEv2 profile: ikev2_profile
  AAA group authorization: none
  AAA user authorization: none
 
-.. code-block:: html
+  code . . .
+
+.. code-block:: bash
   :linenos:
 
 vEDGE01#sh crypto ipsec transform-set 
@@ -626,8 +638,12 @@ Transform set default: { esp-aes esp-sha-hmac  }
 Transform set ipsec_transform1: { esp-256-aes esp-sha512-hmac  } 
    will negotiate = { Tunnel,  }, 
 
-.. code-block:: html
+  code . . .
+
+.. code-block:: bash
   :linenos:
+
+
 vEDGE01#sh crypto ipsec profile 
 IPSEC profile default
 Security association lifetime: 4608000 kilobytes/3600 seconds
@@ -649,12 +665,12 @@ Transform sets={
 ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
 }
 
-
+  code . . .
 
 4. On vEDG02 - Interface Configuration and Verification
 -------------------------------------------------------
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 !
@@ -686,12 +702,12 @@ interface GigabitEthernet2
  no mop sysid
 !
 
-
+  code . . .
 
 verification
 ------------
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 vEDGE01#sh ip int bri
@@ -709,7 +725,7 @@ Tunnel2                1.1.247.2       YES manual up                    up
 ---------------------------------------------------------
 
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 !
@@ -752,9 +768,11 @@ router ospf 11
  network 200.1.247.2 0.0.0.0 area 11
 !
 
+  code . . .
+
 verification
 ------------
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 vEDGE02#sh ip lisp map-cache 
@@ -774,7 +792,9 @@ LISP IPv4 Mapping Cache for LISP 0 EID-table default (IID 0), 3 entries
   Locator      Uptime    State  Pri/Wgt     Encap-IID
   200.1.247.2  03:11:00  up       1/100 
 
-.. code-block:: html
+  code . . .
+
+.. code-block:: bash
   :linenos:
 
 vEDGE02#sh ip lisp database  
@@ -794,11 +814,11 @@ Entries total 1, no-route 0, inactive 0, do-not-register 0
   Locator      Pri/Wgt  Source     State
   200.1.247.1    1/100  cfg-addr   site-self, reachable
 
-.. code-block:: html
+.. code-block:: bash
   :linenos:
 
 vEDGE02#sh ip ospf nei
 Neighbor ID     Pri   State           Dead Time   Address         Interface
 200.1.247.2       0   FULL/  -        00:00:30    1.1.247.2       Tunnel2
 
-
+  code . . .
