@@ -78,9 +78,6 @@ a route with a Null0 next-hop
 
 4)If the action is to forward, then the packet is encapsulated and a destination address lookup is performed on the destination/remoteRLOC, and once the output interface is known, the source RLOC is filled in.
 
- 
-
- 
 
 LISP Data Packet Header Format
 ==============================
@@ -209,6 +206,11 @@ Lab Setup:
   :width: 600
   :alt: Alternative text
 
+6. Start the Virtual Machine by click on the start button, upon successful boot the below window appears with an ip address.
+
+.. image:: screen3.png
+  :width: 600
+  :alt: Alternative text
 
 6. The configuration file for vEDGE01 and vEDGE02 are as below
 
