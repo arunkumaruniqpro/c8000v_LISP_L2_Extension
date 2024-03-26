@@ -240,7 +240,7 @@ Lab Setup:
 -------------------------------------------------------
 
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 #
@@ -269,7 +269,7 @@ set transform-set ipsec_transform1 set ikev2-profile ikve2_profile
 
 verification
 ------------
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 
@@ -358,7 +358,7 @@ ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } ,
 4. On vEDG01 - Interface Configuration and Verification
 -------------------------------------------------------
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 
@@ -393,7 +393,7 @@ interface GigabitEthernet2
 
 verification
 ------------
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 
@@ -410,7 +410,7 @@ Tunnel2                1.1.247.1       YES manual up                    up
 
 5. On vEDG01 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 
@@ -451,7 +451,7 @@ router ospf 11
 verification
 ------------
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 
@@ -472,7 +472,7 @@ LISP IPv4 Mapping Cache for LISP 0 EID-table default (IID 0), 3 entries
   Negative cache entry, action: forward-native
 
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 
@@ -504,7 +504,7 @@ Neighbor ID     Pri   State           Dead Time   Address         Interface
 -------------------------------------------------------
 
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 !
@@ -555,7 +555,7 @@ crypto ipsec profile p2p_pf1
 verification
 ------------
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 vEDGE02#sh crypto ikev2 proposal 
@@ -571,7 +571,7 @@ vEDGE02#sh crypto ikev2 proposal
      DH Group   : DH_GROUP_2048_MODP/Group 14
 
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 vEDGE02#sh crypto ikev2 policy 
@@ -584,7 +584,7 @@ vEDGE02#sh crypto ikev2 policy
       Match address local : any 
       Proposal    : ikev2_proposal 
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 vEDGE02#sh crypto ikev2 profile 
@@ -617,7 +617,7 @@ IKEv2 profile: ikev2_profile
  AAA group authorization: none
  AAA user authorization: none
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 vEDGE01#sh crypto ipsec transform-set 
@@ -626,7 +626,7 @@ Transform set default: { esp-aes esp-sha-hmac  }
 Transform set ipsec_transform1: { esp-256-aes esp-sha512-hmac  } 
    will negotiate = { Tunnel,  }, 
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 vEDGE01#sh crypto ipsec profile 
 IPSEC profile default
@@ -654,7 +654,7 @@ ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } ,
 4. On vEDG02 - Interface Configuration and Verification
 -------------------------------------------------------
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 !
@@ -691,7 +691,7 @@ interface GigabitEthernet2
 verification
 ------------
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 vEDGE01#sh ip int bri
@@ -709,7 +709,7 @@ Tunnel2                1.1.247.2       YES manual up                    up
 ---------------------------------------------------------
 
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 !
@@ -754,7 +754,7 @@ router ospf 11
 
 verification
 ------------
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 vEDGE02#sh ip lisp map-cache 
@@ -774,7 +774,7 @@ LISP IPv4 Mapping Cache for LISP 0 EID-table default (IID 0), 3 entries
   Locator      Uptime    State  Pri/Wgt     Encap-IID
   200.1.247.2  03:11:00  up       1/100 
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 vEDGE02#sh ip lisp database  
@@ -794,7 +794,7 @@ Entries total 1, no-route 0, inactive 0, do-not-register 0
   Locator      Pri/Wgt  Source     State
   200.1.247.1    1/100  cfg-addr   site-self, reachable
 
-.. code-block:: JSON
+.. code-block:: python
   :linenos:
 
 vEDGE02#sh ip ospf nei
