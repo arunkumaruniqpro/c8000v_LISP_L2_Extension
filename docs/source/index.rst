@@ -212,6 +212,12 @@ Lab Setup:
   :width: 600
   :alt: Alternative text
 
+7. Open your faviroute and type the IP address show on the above screen to access the Admin GUI.
+
+.. image:: Login.jpg
+  :width: 600
+  :alt: Alternative text
+
 6. The configuration file for vEDGE01 and vEDGE02 are as below
 
    * Download the scripts from : https://github.com/arunkumaruniqpro/LISP
