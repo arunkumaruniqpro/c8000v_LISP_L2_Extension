@@ -191,15 +191,19 @@ Lab Setup:
 
 5. Import the OVF as below
 
+* Starting the VMWare workstation application will open a dash board as below,
+
 .. image:: screen1.png
   :width: 600
   :alt: Alternative text
 
+* Click on the file menu on the Top bar, to list the available menus,
 
 .. image:: screen2.png
   :width: 600
   :alt: Alternative text
 
+* Click on the open menu on the DropDwon List, which will allow you choose the file to import, navigate to the location where you have downloaded and extracted the OVF files.
 
 .. image:: screen3.png
   :width: 600
