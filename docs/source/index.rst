@@ -232,7 +232,7 @@ Lab Setup:
 -------------------------------------------------------
 
 
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 crypto ikev2 proposal ikev2_proposal 
@@ -270,7 +270,7 @@ crypto ipsec profile p2p_pf1
 
 verification
 ------------
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -359,7 +359,7 @@ ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } ,
 4. On vEDG01 - Interface Configuration and Verification
 -------------------------------------------------------
 
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -394,7 +394,7 @@ interface GigabitEthernet2
 
 verification
 ------------
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -411,7 +411,7 @@ Tunnel2                1.1.247.1       YES manual up                    up
 
 5. On vEDG01 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -451,7 +451,7 @@ router ospf 11
 
 verification
 ------------
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -500,7 +500,7 @@ Neighbor ID     Pri   State           Dead Time   Address         Interface
 -------------------------------------------------------
 
 
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -552,7 +552,7 @@ crypto ipsec profile p2p_pf1
 verification
 ------------
 
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -641,7 +641,7 @@ ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } ,
 4. On vEDG02 - Interface Configuration and Verification
 -------------------------------------------------------
 
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -678,7 +678,7 @@ interface GigabitEthernet2
 
 verification
 ------------
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -698,7 +698,7 @@ Tunnel2                1.1.247.2       YES manual up                    up
 
 5. On vEDG02 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
@@ -748,7 +748,7 @@ router ospf 11
 
 verification
 ------------
-.. code-block:: cisco
+.. code-block:: bash
   :linenos:
 
 
