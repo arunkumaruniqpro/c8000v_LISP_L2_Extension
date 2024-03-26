@@ -181,10 +181,15 @@ https://www.vmware.com/pdf/desktop/fusion-getting-started-50.pdf
 https://drive.google.com/file/d/1CqPXxXEIfGA8OGvMnv51i5xOQtZW5D7w/view?usp=drive_link
 4. Extract or unzip the file using zip extractor or windows default zip
 5. Import the OVF as below 
-  
-4. 
-
-
+.. image:: screen1.png
+  :width: 600
+  :alt: Alternative text
+.. image:: screen2.png
+  :width: 600
+  :alt: Alternative text
+.. image:: screen3.png
+  :width: 600
+  :alt: Alternative text
 
 4. Download the images and follow the instruction to setup the PC;s:
   https://www.eve-ng.net/index.php/documentation/howtos/howto-create-own-linux-host-image/
