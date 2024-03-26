@@ -214,7 +214,7 @@ Lab Setup:
 
 7. Open your faviroute and type the IP address show on the above screen to access the Admin GUI.
 
-.. image:: Login.jpg
+.. image:: eve-ng-admin-gui.png
   :width: 600
   :alt: Alternative text
 
