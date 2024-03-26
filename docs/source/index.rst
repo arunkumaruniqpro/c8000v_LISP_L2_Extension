@@ -264,7 +264,7 @@ crypto ipsec profile p2p_pf1
 set transform-set ipsec_transform1 set ikev2-profile ikve2_profile
 #
 
-   code
+
 
 
 verification
@@ -353,7 +353,7 @@ Transform sets={
 ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
 }
 
-   code
+
 
 4. On vEDG01 - Interface Configuration and Verification
 -------------------------------------------------------
