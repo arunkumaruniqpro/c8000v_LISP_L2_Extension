@@ -245,89 +245,88 @@ Lab Setup:
 
 verification
 ------------
-.. code-block:: bash
-  :linenos:
+.. code-block:: console
 
 
-vEDGE01#sh crypto ikev2 proposal 
- IKEv2 proposal: default 
-     Encryption : AES-CBC-256
-     Integrity  : SHA512 SHA384
-     PRF        : SHA512 SHA384
-     DH Group   : DH_GROUP_256_ECP/Group 19 DH_GROUP_2048_MODP/Group 14 DH_GROUP_521_ECP/Group 21 DH_GROUP_1536_MODP/Group 5
- IKEv2 proposal: ikev2_proposal 
-     Encryption : AES-CBC-128
-     Integrity  : SHA96
-     PRF        : SHA1
-     DH Group   : DH_GROUP_2048_MODP/Group 14
-
-vEDGE01#sh crypto ikev2 policy 
- IKEv2 policy : default
-      Match fvrf : any
-      Match address local : any 
-      Proposal    : default 
- IKEv2 policy : ikev2_policy
-      Match fvrf  : global
-      Match address local : any 
-      Proposal    : ikev2_proposal 
-
-vEDGE01#sh crypto ikev2 profile 
-IKEv2 profile: ikev2_profile
- Shutdown : No
- Ref Count: 5
- Match criteria: 
-  Fvrf: global
-  Local address/interface: none
-  Identities: 
-   address 10.16.201.1 255.255.255.252
-  Certificate maps: none
- Local identity: address 10.16.201.2
- Remote identity: none
- Local authentication method: pre-share
- Remote authentication method(s): pre-share
- EAP options: none
- Keyring: ikev2_keyring
- Trustpoint(s): none
- Lifetime: 86400 seconds
- DPD: disabled
- NAT-keepalive: disabled
- Ivrf: none
- Virtual-template: none
- mode auto: none
- AAA AnyConnect EAP authentication mlist: none
- AAA EAP authentication mlist: none
- AAA authentication mlist: none
- AAA Accounting: none
- AAA group authorization: none
- AAA user authorization: none
-
-vEDGE01#sh crypto ipsec transform-set 
-Transform set default: { esp-aes esp-sha-hmac  } 
-   will negotiate = { Transport,  }, 
-   
-Transform set ipsec_transform1: { esp-256-aes esp-sha512-hmac  } 
-   will negotiate = { Tunnel,  }, 
-
-vEDGE01#sh crypto ipsec profile 
-IPSEC profile default
-Security association lifetime: 4608000 kilobytes/3600 seconds
-Dualstack (Y/N): N
-Responder-Only (Y/N): N
-PFS (Y/N): N
-Mixed-mode : Disabled
-Transform sets={ 
-default:  { esp-aes esp-sha-hmac  } , 
-}
-IPSEC profile p2p_pf1
-IKEv2 Profile: ikev2_profile
-Security association lifetime: 4608000 kilobytes/3600 seconds
-Dualstack (Y/N): N
-Responder-Only (Y/N): N
-PFS (Y/N): N
-Mixed-mode : Disabled
-Transform sets={ 
-ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
-}
+            vEDGE01#sh crypto ikev2 proposal 
+             IKEv2 proposal: default 
+                 Encryption : AES-CBC-256
+                 Integrity  : SHA512 SHA384
+                 PRF        : SHA512 SHA384
+                 DH Group   : DH_GROUP_256_ECP/Group 19 DH_GROUP_2048_MODP/Group 14 DH_GROUP_521_ECP/Group 21 DH_GROUP_1536_MODP/Group 5
+             IKEv2 proposal: ikev2_proposal 
+                 Encryption : AES-CBC-128
+                 Integrity  : SHA96
+                 PRF        : SHA1
+                 DH Group   : DH_GROUP_2048_MODP/Group 14
+            
+            vEDGE01#sh crypto ikev2 policy 
+             IKEv2 policy : default
+                  Match fvrf : any
+                  Match address local : any 
+                  Proposal    : default 
+             IKEv2 policy : ikev2_policy
+                  Match fvrf  : global
+                  Match address local : any 
+                  Proposal    : ikev2_proposal 
+            
+            vEDGE01#sh crypto ikev2 profile 
+            IKEv2 profile: ikev2_profile
+             Shutdown : No
+             Ref Count: 5
+             Match criteria: 
+              Fvrf: global
+              Local address/interface: none
+              Identities: 
+               address 10.16.201.1 255.255.255.252
+              Certificate maps: none
+             Local identity: address 10.16.201.2
+             Remote identity: none
+             Local authentication method: pre-share
+             Remote authentication method(s): pre-share
+             EAP options: none
+             Keyring: ikev2_keyring
+             Trustpoint(s): none
+             Lifetime: 86400 seconds
+             DPD: disabled
+             NAT-keepalive: disabled
+             Ivrf: none
+             Virtual-template: none
+             mode auto: none
+             AAA AnyConnect EAP authentication mlist: none
+             AAA EAP authentication mlist: none
+             AAA authentication mlist: none
+             AAA Accounting: none
+             AAA group authorization: none
+             AAA user authorization: none
+            
+            vEDGE01#sh crypto ipsec transform-set 
+            Transform set default: { esp-aes esp-sha-hmac  } 
+               will negotiate = { Transport,  }, 
+               
+            Transform set ipsec_transform1: { esp-256-aes esp-sha512-hmac  } 
+               will negotiate = { Tunnel,  }, 
+            
+            vEDGE01#sh crypto ipsec profile 
+            IPSEC profile default
+            Security association lifetime: 4608000 kilobytes/3600 seconds
+            Dualstack (Y/N): N
+            Responder-Only (Y/N): N
+            PFS (Y/N): N
+            Mixed-mode : Disabled
+            Transform sets={ 
+            default:  { esp-aes esp-sha-hmac  } , 
+            }
+            IPSEC profile p2p_pf1
+            IKEv2 Profile: ikev2_profile
+            Security association lifetime: 4608000 kilobytes/3600 seconds
+            Dualstack (Y/N): N
+            Responder-Only (Y/N): N
+            PFS (Y/N): N
+            Mixed-mode : Disabled
+            Transform sets={ 
+            ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } , 
+            }
 
   code . . .
 
