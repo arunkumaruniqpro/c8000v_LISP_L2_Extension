@@ -1,3 +1,5 @@
+.. code-block:: bash
+
 !
 crypto ikev2 proposal ikev2_proposal
 encryption aes-cbc-128 integrity sha1 group 14
