@@ -451,6 +451,7 @@ router ospf 11
 
 verification
 ------------
+
 .. code-block:: bash
   :linenos:
 
@@ -471,9 +472,13 @@ LISP IPv4 Mapping Cache for LISP 0 EID-table default (IID 0), 3 entries
 11.11.11.128/25, uptime: 02:58:00, expires: 00:00:17, via map-reply, forward-native
   Negative cache entry, action: forward-native
 
+
+.. code-block:: bash
+  :linenos:
+
+
 vEDGE01#sh ip lisp database 
 -------------------------------------------------------
-
  <show ip/ipv6 lisp (instance-id <0-16777200>) database
  (EID-Prefix list)> commands are depreciated.
 
@@ -502,7 +507,6 @@ Neighbor ID     Pri   State           Dead Time   Address         Interface
 
 .. code-block:: bash
   :linenos:
-
 
 !
 crypto ikev2 proposal ikev2_proposal 
@@ -555,7 +559,6 @@ verification
 .. code-block:: bash
   :linenos:
 
-
 vEDGE02#sh crypto ikev2 proposal 
  IKEv2 proposal: default 
      Encryption : AES-CBC-256
@@ -568,6 +571,10 @@ vEDGE02#sh crypto ikev2 proposal
      PRF        : SHA1
      DH Group   : DH_GROUP_2048_MODP/Group 14
 
+
+.. code-block:: bash
+  :linenos:
+
 vEDGE02#sh crypto ikev2 policy 
  IKEv2 policy : default
       Match fvrf : any
@@ -577,6 +584,9 @@ vEDGE02#sh crypto ikev2 policy
       Match fvrf  : global
       Match address local : any 
       Proposal    : ikev2_proposal 
+
+.. code-block:: bash
+  :linenos:
 
 vEDGE02#sh crypto ikev2 profile 
 IKEv2 profile: ikev2_profile
@@ -608,13 +618,17 @@ IKEv2 profile: ikev2_profile
  AAA group authorization: none
  AAA user authorization: none
 
+.. code-block:: bash
+  :linenos:
+
 vEDGE01#sh crypto ipsec transform-set 
 Transform set default: { esp-aes esp-sha-hmac  } 
-   will negotiate = { Transport,  }, 
-   
+   will negotiate = { Transport,  },    
 Transform set ipsec_transform1: { esp-256-aes esp-sha512-hmac  } 
    will negotiate = { Tunnel,  }, 
 
+.. code-block:: bash
+  :linenos:
 vEDGE01#sh crypto ipsec profile 
 IPSEC profile default
 Security association lifetime: 4608000 kilobytes/3600 seconds
@@ -643,7 +657,6 @@ ipsec_transform1:  { esp-256-aes esp-sha512-hmac  } ,
 
 .. code-block:: bash
   :linenos:
-
 
 !
 interface Loopback0
@@ -678,10 +691,9 @@ interface GigabitEthernet2
 
 verification
 ------------
+
 .. code-block:: bash
   :linenos:
-
-
 
 vEDGE01#sh ip int bri
 Interface              IP-Address      OK? Method Status                Protocol
@@ -694,14 +706,12 @@ Loopback0              200.1.247.2     YES manual up                    up
 Tunnel2                1.1.247.2       YES manual up                    up  
 
 
-
-
 5. On vEDG02 - LISP & OSPF Configuration and Verification
 ---------------------------------------------------------
+
+
 .. code-block:: bash
   :linenos:
-
-
 
 !
 router lisp
@@ -743,15 +753,10 @@ router ospf 11
  network 200.1.247.2 0.0.0.0 area 11
 !
 
-
-
-
 verification
 ------------
 .. code-block:: bash
   :linenos:
-
-
 
 vEDGE02#sh ip lisp map-cache 
 -----------------------------------------------------------
@@ -770,24 +775,28 @@ LISP IPv4 Mapping Cache for LISP 0 EID-table default (IID 0), 3 entries
   Locator      Uptime    State  Pri/Wgt     Encap-IID
   200.1.247.2  03:11:00  up       1/100 
 
+.. code-block:: bash
+  :linenos:
+
 vEDGE02#sh ip lisp database  
 -----------------------------------------------------------
  <show ip/ipv6 lisp (instance-id <0-16777200>) database
  (EID-Prefix list)> commands are depreciated.
-
  Please use <show lisp instance-id <0-16777200>
  ipv4/ipv6 database (EID-Prefix list)> to get desired
  information.
 ------------------------------------------------------------
 LISP ETR IPv4 Mapping Database for LISP 0 EID-table default (IID 0), LSBs: 0x1
 Entries total 1, no-route 0, inactive 0, do-not-register 0
-
 11.11.11.11/32, dynamic-eid subnet1, inherited from default locator-set s2s
   Uptime: 03:11:55, Last-change: 03:11:55
   Domain-ID: local
   Service-Insertion: N/A
   Locator      Pri/Wgt  Source     State
   200.1.247.1    1/100  cfg-addr   site-self, reachable
+
+.. code-block:: bash
+  :linenos:
 
 vEDGE02#sh ip ospf nei
 Neighbor ID     Pri   State           Dead Time   Address         Interface
