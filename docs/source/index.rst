@@ -216,6 +216,7 @@ Lab Setup:
 
    * username: admin
    * password: eve
+   * Choose HTML5 as console for ease access
 
 .. image:: eve-ng-admin-gui.png
   :width: 600
@@ -238,9 +239,12 @@ Lab Setup:
   :alt: Alternative text
 
 
-10. The configuration file for vEDGE01 and vEDGE02 are as below
+11. Double click on the network components such as Routers, Switches and PC's to open HTML5 based terminal.
+
+12. The configuration file for vEDGE01 and vEDGE02 are as below
 
    * Download the scripts from : https://github.com/arunkumaruniqpro/LISP
+
 
 1. On pc1
 ---------
