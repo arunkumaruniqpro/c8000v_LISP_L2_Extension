@@ -223,9 +223,22 @@ Lab Setup:
 
 8. On the EVE-NG, Admin Dashboard look for LISP.unl and click on open lab.
 
+.. image:: Screen4.png
+  :width: 600
+  :alt: Alternative text
+
+9. On the Lab Right Click and select start on the vEDGE-DC01, vEDGE-DC02, PC01 and PC02 to power on the routers and pc's.
+
+.. image:: Screen4.png
+  :width: 600
+  :alt: Alternative text
+
+.. image:: Screen5.png
+  :width: 600
+  :alt: Alternative text
 
 
-6. The configuration file for vEDGE01 and vEDGE02 are as below
+10. The configuration file for vEDGE01 and vEDGE02 are as below
 
    * Download the scripts from : https://github.com/arunkumaruniqpro/LISP
 
