@@ -214,9 +214,16 @@ Lab Setup:
 
 7. Open your faviroute and type the IP address show on the above screen to access the Admin GUI.
 
+   * username: admin
+   * password: eve
+
 .. image:: eve-ng-admin-gui.png
   :width: 600
   :alt: Alternative text
+
+8. On the EVE-NG, Admin Dashboard look for LISP.unl and click on open lab.
+
+
 
 6. The configuration file for vEDGE01 and vEDGE02 are as below
 
