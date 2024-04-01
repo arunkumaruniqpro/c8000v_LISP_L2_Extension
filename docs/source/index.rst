@@ -222,7 +222,7 @@ Lab Setup:
   :width: 600
   :alt: Alternative text
 
-8. On the EVE-NG, Admin Dashboard look for DCI-EVPN.unl and click on open lab.
+8. On the EVE-NG, Admin Dashboard look for LISP.unl and click on open lab.
 
 .. image:: Screen4.png
   :width: 600
